@@ -1,7 +1,7 @@
 import sys, os
 from Bio import SeqIO
 
-withN = True
+withN = False
 results = []
 bases = ["a", "c", "g", "t"]
 refName = ">hCoV-19/Wuhan/WIV04/2019|EPI_ISL_402124|2019-12-30"
@@ -22,7 +22,7 @@ def read_fasta(fp):
     if name: yield (name, ''.join(seq))
 
 for filename in os.scandir(cwd+"/tempFolder"):
-	if (filename.path.endswith(".fa_alignment.txt")):
+	if (filename.path.endswith("_alignment.txt")):
 		with open(filename) as f:
 			for name, sequence in read_fasta(f):
 				if name == refName:
@@ -41,3 +41,4 @@ for filename in os.scandir(cwd+"/tempFolder"):
 				if x != y and y != "-" and y in bases and x in bases:
 					results.append(x.upper()+str(i+1)+y.upper())
 		print(newSeq, "&".join(results))
+		results = []
